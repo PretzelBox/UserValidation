@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Invalid Email Address Message",
+    "sort": "40",
+    "setting_type": "config",
+    "group": "1_Registration Validation",
+    "page_type": null,
+    "help_text": "This message is shown if the email address is a non-valid email address.",
+    "input_type": "text",
+    "default": ""
+  },
+  {
+    "name": "Password Mismatch Message",
+    "sort": "50",
+    "setting_type": "config",
+    "group": "1_Registration Validation",
+    "page_type": null,
+    "help_text": "This message is shown if the password and password confirmation do not match.",
+    "input_type": "text",
+    "default": ""
+  },
+  {
+    "name": "Domain Validation Message",
+    "sort": 60,
+    "setting_type": "config",
+    "group": "1_Registration Validation",
+    "page_type": null,
+    "help_text": "This message is shown if email fails the domain validation.",
+    "input_type": "text",
+    "default": ""
+  },
+  {
+    "name": "Enable Generic Email Validation",
+    "sort": 0,
+    "setting_type": "config",
+    "group": "1_Registration Validation",
+    "page_type": null,
+    "help_text": "Enables validation to prevent invalid email addresses",
+    "input_type": "checkbox",
+    "default": false
+  },
+  {
+    "name": "Enable Password Match Validation",
+    "sort": 10,
+    "setting_type": "config",
+    "group": "1_Registration Validation",
+    "page_type": null,
+    "help_text": "Enables validation to prevent invalid password confirmation match",
+    "input_type": "checkbox",
+    "default": false
+  },
+  {
+    "name": "Enable Email Domain Validation",
+    "sort": 20,
+    "setting_type": "config",
+    "group": "1_Registration Validation",
+    "page_type": null,
+    "help_text": "Enables validation to prevent email addresses that are not from a specific domain.",
+    "input_type": "checkbox",
+    "default": false
+  },
+  {
+    "name": "Email Domain Validation Value",
+    "sort": 30,
+    "setting_type": "config",
+    "group": "1_Registration Validation",
+    "page_type": null,
+    "help_text": "Enables validation to prevent invalid email addresses",
+    "input_type": "text",
+    "default": ""
+  }
+]
