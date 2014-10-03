@@ -25,7 +25,7 @@
     this.$rememberMe = $('#chkDontRememberMe');
     this.$mailingList = $('#chkMailingList');
     this.$registerBtn = $('#btnRegister');
-
+    this.$validateBtn = null;
     this.init();
   }
 
@@ -40,47 +40,56 @@
 
   User.prototype = {
     init : function(){
-      this.bindRegBtn();
+      this.addValidateBtn();
+      this.bindValBtn()
       this.bindEnterKey();
     },
-    bindRegBtn : function(){
+    addValidateBtn : function(){
+      this.$registerBtn.wrap( $('<span></span>').addClass('rel in-block') );
+      this.$validateBtn = this.$registerBtn.clone();
+      this.$registerBtn.after(this.$validateBtn.attr('id', 'btnValidate').attr('name', 'btnValidate').css({top:0, right:0}).addClass('abs'));
+    },
+    bindValBtn : function(){
       var _user = this;
-      this.$registerBtn.on('click',function(e, data){
-        if( _user.checkValidationWasPassed(data) ){
+      this.$validateBtn.on('click',function(e, data){
+
+        if( !_user.checkValidationWasPassed(data) ){
           e.preventDefault();
           _user.btnOnClick(e);
         }
+
       });
     },
     bindEnterKey : function(){
       var _user = this;
       $('body.Register .LayoutContentInner input').on('keydown',function(e, data){
-        if(e.which === 13 && _user.checkValidationWasPassed(data)){
+        if(e.which === 13 && !_user.checkValidationWasPassed(data)){
           e.preventDefault();
           _user.btnOnClick(e);
         }
       });
     },
     checkValidationWasPassed : function(data){
-      return data === undefined || ('AC_ValidationMessage' in data && data.AC_ValidationMessage !== User.ValidationMessage.VALIDATION_PASSED);
+      return !(data === undefined || ('AC_ValidationMessage' in data && data.AC_ValidationMessage !== User.ValidationMessage.VALIDATION_PASSED));
     },
     btnOnClick : function(){
       if( this.options.validateEmail && !this.isValidEmail() ){
         $(window).trigger('AC::RegistraionEvent', { AC_ValidationMessage : User.ValidationMessage.INVALID_EMAIL });
-        return;
+        return false;
       }
 
       if( this.options.validatePasswordMatch && !this.passwordsMatch() ){
         $(window).trigger('AC::RegistraionEvent', { AC_ValidationMessage : User.ValidationMessage.PASSWORD_MISMATCH });
-        return;
+        return false;
       }
 
       if( this.options.validateEmailDomain && !this.validDomain() ){
         $(window).trigger('AC::RegistraionEvent', { AC_ValidationMessage : User.ValidationMessage.WRONG_DOMAIN });
-        return;
+        return false;
       }
 
-      this.$registerBtn.trigger('click', { AC_ValidationMessage : User.ValidationMessage.VALIDATION_PASSED });
+      this.$registerBtn.click();
+      return false;
     },
     passwordsMatch : function(){
       return this.$password1.val() === this.$password2.val();
